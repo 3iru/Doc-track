@@ -54,7 +54,7 @@ DocTrack is a simple minimalistic system that keeps track of documents given out
 - [NextAuth.js](https://next-auth.js.org/) - Authentication for Next.js
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Lucide React](https://lucide.dev/) - Beautiful & consistent icon toolkit
-- [SQLite](https://www.sqlite.org/) - Self-contained, serverless database engine
+- [PostgreSQL](https://www.postgresql.org/) - Powerful, open source object-relational database system
 - [v0.dev](https://v0.dev/) - AI-powered UI design and component generation tool
 
 
