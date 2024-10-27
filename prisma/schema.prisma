@@ -5,10 +5,18 @@ generator client {
   provider = "prisma-client-js"
   previewFeatures = ["omitApi"]
 }
+// If you want to use SQLite instead of PostgreSQL, change the provider to "sqlite"
+// and update the DATABASE_URL in your .env.local file to use a file path, for example:
+// DATABASE_URL="file:./dev.db"
+
+// datasource db {
+//   provider = "sqlite"
+//   url      = env("DATABASE_URL")
+// }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./doctrack.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -26,8 +34,8 @@ model Document {
   docId         String   @unique
   docName       String
   employeeName  String
-  dateIssued    String
-  dateReturned  String?  
+  dateIssued    DateTime
+  dateReturned  DateTime?
   status        String
   userId        String    
   createdAt     DateTime  @default(now())

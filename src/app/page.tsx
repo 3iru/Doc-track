@@ -11,19 +11,10 @@ export default function LandingPage() {
           </div>
           <nav>
             <ul className="flex space-x-4">
+              
               <li>
-                <a href="#features" className="hover:underline">
-                  Features
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:underline">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="/signin" className="hover:underline">
-                  Signin
+                <a href="/signin" className="text-white bg-black hover:bg-gray-800 p-3 px-5 rounded-md">
+                  Sign in
                 </a>
               </li>
             </ul>
