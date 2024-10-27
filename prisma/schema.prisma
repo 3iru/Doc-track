@@ -34,8 +34,8 @@ model Document {
   docId         String   @unique
   docName       String
   employeeName  String
-  dateIssued    DateTime
-  dateReturned  DateTime?
+  dateIssued    String
+  dateReturned  String?  
   status        String
   userId        String    
   createdAt     DateTime  @default(now())
