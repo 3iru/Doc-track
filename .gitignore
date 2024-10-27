@@ -41,5 +41,4 @@ dev.db
 *.db
 
 # Prisma artifacts
-prisma/migrations/
 prisma/dev.db
