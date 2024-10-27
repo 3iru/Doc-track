@@ -19,7 +19,7 @@ export default function SignUp() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/view");
+      router.push("/dashboard");
     }
   }, [status, router]);
 
@@ -38,7 +38,7 @@ export default function SignUp() {
       const res = await signUp(email, password);
 
       if (res?.ok) {
-        window.location.href = "/view";
+        window.location.href = "/dashboard";
       } else if (res?.error) {
         throw new Error(res.message);
       }

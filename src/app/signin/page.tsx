@@ -17,7 +17,7 @@ export default function Login() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/view");
+      router.push("/dashboard");
     }
   }, [status, router]);
 
@@ -29,7 +29,7 @@ export default function Login() {
     if (res?.error) {
       setError(res.message);
     } else if (res?.ok) {
-      window.location.href = "/view";
+      window.location.href = "/dashboard";
     }
   };
 

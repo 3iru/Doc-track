@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,57 +13,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, History, FileText, Sparkles } from "lucide-react";
+import { Search, Plus, History, FileText, Sparkles, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { type Document } from "@/types/document";
 import LoadingScreen from "../loading";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { createNewDocument, read, update } from "@/server/action";
+import { createNewDocument, update } from "@/server/action";
+import { useDocuments } from "@/app/hooks/UseDocuments";
 
 export default function DocumentTracker() {
-  const [Documents, setDocuments] = useState<Document[]>([]);
+  const {
+    setDocuments,
+    searchTerm,
+    setSearchTerm,
+    loading,
+    status,
+    filteredDocuments,
+    session,
+  } = useDocuments();
+
   const [newDocument, setNewDocument] = useState({ name: "", employee: "" });
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  const router = useRouter();
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      router.push("/signin");
-    },
-  });
-
-  const filteredDocuments = useMemo(() => {
-    return Documents.filter(
-      (doc) =>
-        doc.docName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        doc.employeeName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [Documents, searchTerm]);
-
-  // Fetch documents
-  useEffect(() => {
-    const fetchDocuments = async () => {
-      if (status !== "authenticated" || !session?.user?.email) return;
-
-      try {
-        const docData = await read(session.user.email);
-        if (docData.status === "success" && docData.data) {
-          setDocuments(docData.data);
-        } else {
-          console.error("Error fetching Documents:", docData);
-        }
-      } catch (error) {
-        console.error("Error reading data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDocuments();
-  }, [status, session?.user?.email]);
 
   if (loading || status === "loading") {
     return <LoadingScreen />;
@@ -95,7 +63,6 @@ export default function DocumentTracker() {
 
     try {
       const result = await createNewDocument(documentsToCreate);
-      console.log(result);
       if (result.status !== "success") {
     
         setDocuments((prevDocs) =>
@@ -243,8 +210,10 @@ export default function DocumentTracker() {
                             variant="outline"
                             size="sm"
                             onClick={() => markAsReturned(doc.docId)}
+                            className="flex items-center border  transition-all duration-200 hover:bg-primary-dark border-green-400"
                           >
-                            Mark Returned
+                            <CheckCircle className="w-3 h-3" />
+                            <span>Mark Returned</span>
                           </Button>
                         </TableCell>
                       </TableRow>
